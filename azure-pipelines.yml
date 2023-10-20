@@ -34,6 +34,7 @@ steps:
     command: 'test'
     projects: '$(solution)'
     arguments: '--configuration $(BuildConfiguration)'
+    
 - task: PublishBuildArtifacts@1
   name: 'PublishBuildArtifacts'
   displayName: 'Publish build artifacts'
@@ -41,3 +42,12 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'AzureTestProject'
     publishLocation: 'Container'
+
+- task: DotNetCoreCLI@2
+  displayName: '📗📗📗 Publish 📗📗📗'
+  inputs:
+    command: publish
+    projects: '**/*WebApi.csproj'
+    publishWebProjects: False
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
